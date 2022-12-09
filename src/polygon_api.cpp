@@ -7,8 +7,8 @@
 #include <cpr/cpr.h>
 
 namespace polygon_api {
-    int add(int a, int b) {
-        return a + b;
+    std::shared_ptr<PolygonSession> GetPolygonSession(const std::string& login, const std::string& password,
+                                                                         const std::string& key, const std::string& secret) {
+        return std::make_shared<PolygonSession>(login, password, key, secret);
     }
-    cpr::Response r;
 }

@@ -70,6 +70,9 @@ generate_export_header(polygon_api EXPORT_FILE_NAME include/polygon_api/${export
 set(sources
         include/polygon_api/export.h
         include/polygon_api/polygon_api.h
+        include/polygon_api/PolygonSession.h
+        include/polygon_api/Problem.h
+        include/polygon_api/Checker.h
         src/polygon_api.cpp)
 source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" FILES ${sources})
 
