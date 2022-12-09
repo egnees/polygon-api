@@ -4,9 +4,11 @@
 //
 
 #include <polygon_api/polygon_api.h>
+#include <cpr/cpr.h>
 
 namespace polygon_api {
     int add(int a, int b) {
         return a + b;
     }
+    cpr::Response r;
 }

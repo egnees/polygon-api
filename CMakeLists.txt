@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.14)
+cmake_minimum_required(VERSION 3.15)
 project(polygon_api
         VERSION 1.0.0
         DESCRIPTION "C++ library maintaining codeforces polygon user-api interaction"
@@ -7,6 +7,18 @@ project(polygon_api
 #----------------------------------------------------------------------------------------------------------------------
 # general settings and options
 #----------------------------------------------------------------------------------------------------------------------
+
+if (PARENT_CXX_STANDARD)
+    if (PARENT_CXX_STANDARD LESS 17)
+        message(FATAL_ERROR "cpr ${cpr_VERSION} does not support ${PARENT_CXX_STANDARD}")
+    endif()
+else()
+    # Set standard version if not already set by potential parent project
+    set(CMAKE_CXX_STANDARD 17)
+endif()
+
+message(STATUS "CXX standard: ${CMAKE_CXX_STANDARD}")
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 include(cmake/utils.cmake)
 include(GNUInstallDirs)
@@ -154,3 +166,10 @@ if(POLYGON_API_BUILD_DOCS)
     find_package(Doxygen REQUIRED)
     doxygen_add_docs(docs include)
 endif()
+
+find_package(cpr REQUIRED)
+
+target_link_libraries(polygon_api
+        PRIVATE
+            polygon_api::polygon_api
+            cpr::cpr)

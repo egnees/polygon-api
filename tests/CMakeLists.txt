@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.14)
+cmake_minimum_required(VERSION 3.15)
 project(polygon_api_tests)
 
 #----------------------------------------------------------------------------------------------------------------------
@@ -43,29 +43,30 @@ endif()
 #----------------------------------------------------------------------------------------------------------------------
 
 set(sources
-        add_test.cpp
-        sub_test.cpp)
+        cpr_test.cpp)
 source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" FILES ${sources})
 
 #----------------------------------------------------------------------------------------------------------------------
 # tests target
 #----------------------------------------------------------------------------------------------------------------------
 
+find_package(cpr REQUIRED)
+
 add_executable(polygon_api_tests)
 target_sources(polygon_api_tests PRIVATE ${sources})
 
-add_executable(polygon_api_test_add)
-target_sources(polygon_api_test_add PRIVATE add_test.cpp)
+add_executable(cpr_test)
+target_sources(cpr_test PRIVATE cpr_test.cpp)
 
-target_link_libraries(polygon_api_tests
-        PRIVATE
-            polygon_api::polygon_api
-            gtest_main)
-
-target_link_libraries(polygon_api_test_add
-        PRIVATE
+target_link_libraries(polygon_api_tests PRIVATE
         polygon_api::polygon_api
-        gtest_main)
+        gtest_main
+        cpr::cpr)
+
+target_link_libraries(cpr_test PRIVATE
+        polygon_api::polygon_api
+        gtest_main
+        cpr::cpr)
 
 if(NOT is_top_level)
     win_copy_deps_to_target_dir(polygon_api_tests polygon_api::polygon_api)
