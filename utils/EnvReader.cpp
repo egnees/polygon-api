@@ -14,7 +14,7 @@ namespace EnvReader {
 polygon_api::Account Read() {
     std::ifstream fin;
     try {
-        fin.open("../../../utils/env.txt");
+        fin.open("../../../env.txt");
         if (!fin.is_open()) {
             throw std::exception();
         }

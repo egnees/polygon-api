@@ -6,10 +6,11 @@
 #include <polygon_api/polygon_api.h>
 
 #include <iostream>
+#include <cassert>
 
 #include "../utils/EnvReader.cpp"
 
-int main(int, char*[]) {
+int main() {
     std::shared_ptr<polygon_api::PolygonSession> ptr = nullptr;
     try {
         auto ac = EnvReader::Read();
@@ -18,6 +19,7 @@ int main(int, char*[]) {
         std::cout << e.what() << std::endl;
     }
     if (ptr) {
+        assert(ptr->IsAuthRawSuccess());
         std::cout << "success!" << std::endl;
     } else {
         std::cout << "fail!" << std::endl;
