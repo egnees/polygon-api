@@ -68,6 +68,7 @@ endif()
 generate_export_header(polygon_api EXPORT_FILE_NAME include/polygon_api/${export_file_name})
 
 set(sources
+        include/polygon_api/Account.h
         include/polygon_api/PolygonSession.h
         include/polygon_api/Problem.h
         include/polygon_api/Checker.h

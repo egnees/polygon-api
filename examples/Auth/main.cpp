@@ -7,17 +7,19 @@
 
 #include <iostream>
 
+#include "../utils/EnvReader.cpp"
+
 int main(int, char*[]) {
     std::shared_ptr<polygon_api::PolygonSession> ptr = nullptr;
     try {
-        ptr = polygon_api::GetPolygonSession("egnees", "fd8a13031775c9d12bedefad444381e3", "3", "4");
+        ptr = polygon_api::GetPolygonSession(EnvReader::Read());
     } catch (std::runtime_error& e) {
         std::cout << e.what();
     }
-    if (ptr && ptr->IsAuthRawSuccess()) {
-        std::cout << "success!";
+    if (ptr) {
+        std::cout << "success!" << std::endl;
     } else {
-        std::cout << "fail!";
+        std::cout << "fail!" << std::endl;
     }
     return 0;
 }

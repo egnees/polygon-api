@@ -15,7 +15,7 @@ const std::string kPolygonFp = "a92fdda7ac4f88ec7f7a8b28231cdd04";
 
 class PolygonSession {
 public:
-    PolygonSession(std::string, std::string, std::string, std::string);
+    PolygonSession(Account account);
 
     static std::string ExtractCcidFromHTML(const std::string&, const std::string&);
     static std::string ExtractCcidFromURL(const std::string&);
@@ -40,10 +40,7 @@ private:
 
     std::string ccid_;
 
-    std::string login_;
-    std::string password_;
-    std::string key_;
-    std::string secret_;
+    Account account_;
 };
 
 } // namespace polygon_api

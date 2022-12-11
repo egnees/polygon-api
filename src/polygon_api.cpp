@@ -9,7 +9,11 @@
 namespace polygon_api {
     std::shared_ptr<PolygonSession> GetPolygonSession(const std::string& login, const std::string& password,
                                                                          const std::string& key, const std::string& secret) {
-        auto ptr = std::make_shared<PolygonSession>(login, password, key, secret);
+        return GetPolygonSession(Account(login, password, key, secret));
+    }
+
+    std::shared_ptr<PolygonSession> GetPolygonSession(const Account& account) {
+        auto ptr = std::make_shared<PolygonSession>(account);
         return ptr->IsAuthRawSuccess() ? ptr : nullptr;
     }
 }

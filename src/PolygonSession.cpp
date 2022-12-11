@@ -8,12 +8,10 @@
 
 namespace polygon_api {
 
-PolygonSession::PolygonSession(std::string login, std::string password,
-                               std::string key, std::string secret)
+PolygonSession::PolygonSession(Account account)
                                : raw_requester_(std::make_shared<RawRequester>(kPolygonRawUrl)),
-                               login_(std::move(login)), password_(std::move(password)),
-                               key_(std::move(key)), secret_(std::move(secret)) {
-    logged_raw = AuthRaw(login_, password_);
+                               account_(std::move(account)) {
+    logged_raw = AuthRaw(account_.login_, account_.password_);
 }
 
 std::shared_ptr<RequestBuilder> PolygonSession::NewRawRequest() {
