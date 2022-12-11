@@ -177,6 +177,8 @@ if(POLYGON_API_BUILD_DOCS)
     doxygen_add_docs(docs include)
 endif()
 
+add_subdirectory(utils)
+
 find_package(cpr REQUIRED)
 
 target_link_libraries(polygon_api

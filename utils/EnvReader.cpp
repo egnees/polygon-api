@@ -7,15 +7,19 @@
 
 #include <fstream>
 #include <string>
+#include <mach-o/dyld.h>
 
 namespace EnvReader {
 
 polygon_api::Account Read() {
     std::ifstream fin;
     try {
-        fin.open(".env");
+        fin.open("../../../utils/env.txt");
+        if (!fin.is_open()) {
+            throw std::exception();
+        }
     } catch (...) {
-        throw std::runtime_error("cant open file .env");
+        throw std::runtime_error("cant open file env.txt");
     }
     auto read_token = [&fin](std::string& dest, const std::string& token_name) {
         try {
@@ -38,8 +42,10 @@ polygon_api::Account Read() {
         read_line_with_token(key, "key");
         read_line_with_token(secret, "secret");
     } catch(std::runtime_error& e) {
+        fin.close();
         throw std::runtime_error("unexpected format of .env file; " + std::string(e.what()));
     }
+    fin.close();
 
     return {login, password, key, secret};
 }

@@ -12,9 +12,10 @@
 int main(int, char*[]) {
     std::shared_ptr<polygon_api::PolygonSession> ptr = nullptr;
     try {
-        ptr = polygon_api::GetPolygonSession(EnvReader::Read());
+        auto ac = EnvReader::Read();
+        ptr = polygon_api::GetPolygonSession(ac);
     } catch (std::runtime_error& e) {
-        std::cout << e.what();
+        std::cout << e.what() << std::endl;
     }
     if (ptr) {
         std::cout << "success!" << std::endl;
