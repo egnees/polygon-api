@@ -5,8 +5,6 @@
 
 #pragma once
 
-#include <cpr/cpr.h>
-
 #ifndef POLYGON_API_STATIC_DEFINE
 #   include <polygon_api/export_shared.h>
 #else
