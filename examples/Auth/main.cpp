@@ -11,18 +11,32 @@
 #include "../utils/EnvReader.cpp"
 
 int main() {
-    std::shared_ptr<polygon_api::PolygonSession> ptr = nullptr;
+    std::shared_ptr<polygon_api::PolygonSession> success_auth = nullptr; // should be successful
     try {
-        auto ac = EnvReader::Read();
-        ptr = polygon_api::GetPolygonSession(ac);
+        success_auth = polygon_api::GetPolygonSession(EnvReader::Read());
     } catch (std::runtime_error& e) {
         std::cout << e.what() << std::endl;
     }
-    if (ptr) {
-        assert(ptr->IsAuthRawSuccess());
-        std::cout << "success!" << std::endl;
+    if (success_auth) {
+        assert(success_auth->IsAuthRawSuccess());
+        std::cout << "success, as expected!" << std::endl;
     } else {
-        std::cout << "fail!" << std::endl;
+        std::cout << "fail, unexpected!" << std::endl;
     }
+
+    std::shared_ptr<polygon_api::PolygonSession> fail_auth = nullptr; // should fail
+
+    try {
+        fail_auth = polygon_api::GetPolygonSession("some_login", "password", "api_key", "api_secret");
+    } catch (std::runtime_error& e) {
+        std::cout << e.what() << std::endl;
+    }
+    if (fail_auth) {
+        assert(fail_auth->IsAuthRawSuccess());
+        std::cout << "success, unexpected!" << std::endl;
+    } else {
+        std::cout << "fail, as expected!" << std::endl;
+    }
+
     return 0;
 }
