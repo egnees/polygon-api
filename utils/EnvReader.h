@@ -11,6 +11,8 @@ namespace EnvReader {
 
 polygon_api::Account Read();
 
+polygon_api::Account Read(const std::string&);
+
 } //namespace EnvReader
 
 #define POLYGON_API_ENVREAD_H

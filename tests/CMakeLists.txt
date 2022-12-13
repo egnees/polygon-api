@@ -43,7 +43,8 @@ endif()
 #----------------------------------------------------------------------------------------------------------------------
 
 set(sources
-        cpr_test.cpp)
+        cpr_test.cpp
+        auth_test.cpp)
 source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" FILES ${sources})
 
 #----------------------------------------------------------------------------------------------------------------------
@@ -58,12 +59,20 @@ target_sources(polygon_api_tests PRIVATE ${sources})
 add_executable(cpr_test)
 target_sources(cpr_test PRIVATE cpr_test.cpp)
 
+add_executable(auth_test)
+target_sources(auth_test PRIVATE auth_test.cpp)
+
 target_link_libraries(polygon_api_tests PRIVATE
         polygon_api::polygon_api
         gtest_main
         cpr::cpr)
 
 target_link_libraries(cpr_test PRIVATE
+        polygon_api::polygon_api
+        gtest_main
+        cpr::cpr)
+
+target_link_libraries(auth_test PRIVATE
         polygon_api::polygon_api
         gtest_main
         cpr::cpr)

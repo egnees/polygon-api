@@ -7,14 +7,17 @@
 
 #include <fstream>
 #include <string>
-#include <mach-o/dyld.h>
 
 namespace EnvReader {
 
 polygon_api::Account Read() {
+    return Read("../../../env.txt");
+}
+
+polygon_api::Account Read(const std::string& path) {
     std::ifstream fin;
     try {
-        fin.open("../../../env.txt");
+        fin.open(path);
         if (!fin.is_open()) {
             throw std::exception();
         }
