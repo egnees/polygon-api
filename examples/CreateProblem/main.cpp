@@ -14,7 +14,7 @@
 int main() {
     auto session = polygon_api::GetPolygonSession(EnvReader::Read());
     std::cout << (session->IsAuthRawSuccess() ?  "Auth successful\n" : "Failed to auth\n");
-    auto problem = session->CreateProblem("abacab12a");
+    auto problem = session->CreateProblem("abacab12ax");
     if (problem) {
         std::cout << "Problem successfuly created\n";
     } else {

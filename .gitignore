@@ -15,6 +15,5 @@ CMakeUserPresets.json
 .DS_Store
 
 # env
-./env.txt
-env.txt
+.env
 

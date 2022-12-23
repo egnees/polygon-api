@@ -11,17 +11,17 @@
 #include "../utils/EnvReader.cpp"
 
 TEST(auth_test, full_auth_works) {
-    auto session = polygon_api::GetPolygonSession(EnvReader::Read("../../env.txt"));
+    auto session = polygon_api::GetPolygonSession(EnvReader::Read("../../.env/env.txt"));
     ASSERT_TRUE(session != nullptr);
     ASSERT_TRUE(session->IsAuthRawSuccess());
 }
 
 TEST(auth_test, twice_auth_works) {
-    auto session1 = polygon_api::GetPolygonSession(EnvReader::Read("../../env.txt"));
+    auto session1 = polygon_api::GetPolygonSession(EnvReader::Read("../../.env/env.txt"));
     ASSERT_TRUE(session1 != nullptr);
     ASSERT_TRUE(session1->IsAuthRawSuccess());
 
-    auto session2 = polygon_api::GetPolygonSession(EnvReader::Read("../../env.txt"));
+    auto session2 = polygon_api::GetPolygonSession(EnvReader::Read("../../.env/env.txt"));
     ASSERT_TRUE(session2 != nullptr);
     ASSERT_TRUE(session2->IsAuthRawSuccess());
 }

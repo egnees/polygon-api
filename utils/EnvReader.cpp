@@ -11,7 +11,7 @@
 namespace EnvReader {
 
 polygon_api::Account Read() {
-    return Read("../../../env.txt");
+    return Read("../../../.env/env.txt");
 }
 
 polygon_api::Account Read(const std::string& path) {
@@ -31,7 +31,7 @@ polygon_api::Account Read(const std::string& path) {
             throw std::runtime_error("cant read token " + token_name);
         }
     };
-    auto read_line_with_token = [&fin, read_token](std::string& dest, const std::string& token_name) {
+    auto read_line_with_token = [read_token](std::string& dest, const std::string& token_name) {
         std::string token_def;
         std::string sign_eq;
         read_token(token_def, token_name + " definition");

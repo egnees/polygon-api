@@ -14,13 +14,13 @@
 
 TEST(create_problem_test, create_problem_works) {
     std::mt19937 rnd(std::chrono::high_resolution_clock::now().time_since_epoch().count());
-    auto problem = polygon_api::GetPolygonSession(EnvReader::Read("../../env.txt"))->CreateProblem("test-problem" + std::to_string(rnd() % 1000000));
+    auto problem = polygon_api::GetPolygonSession(EnvReader::Read("../../.env/env.txt"))->CreateProblem("test-problem" + std::to_string(rnd() % 1000000));
     ASSERT_TRUE(problem);
 }
 
 TEST(create_problem_test, create_problem_twice) {
     std::mt19937 rnd(std::chrono::high_resolution_clock::now().time_since_epoch().count());
-    auto session = polygon_api::GetPolygonSession(EnvReader::Read("../../env.txt"));
+    auto session = polygon_api::GetPolygonSession(EnvReader::Read("../../.env/env.txt"));
     auto problem_1 = session->CreateProblem("test-problem" + std::to_string(rnd() % 1000000));
     auto problem_2 = session->CreateProblem("test-problem" + std::to_string(rnd() % 1000000));
     ASSERT_TRUE(problem_1);
@@ -29,7 +29,7 @@ TEST(create_problem_test, create_problem_twice) {
 
 TEST(create_problem_test, create_one_problem_twice) {
     std::mt19937 rnd(std::chrono::high_resolution_clock::now().time_since_epoch().count());
-    auto session = polygon_api::GetPolygonSession(EnvReader::Read("../../env.txt"));
+    auto session = polygon_api::GetPolygonSession(EnvReader::Read("../../.env/env.txt"));
     std::string problem_name = "test-problem" + std::to_string(rnd() % 1000000);
     auto prob_1 = session->CreateProblem(problem_name);
     auto prob_11 = session->CreateProblem(problem_name);
