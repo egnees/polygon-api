@@ -10,13 +10,13 @@
 
 namespace polygon_api {
 
-POLYGON_API_EXPORT class RawRequester : public BaseRequester {
+class RawRequester : public BaseRequester {
+    typedef std::vector<std::pair<std::string, std::string>> Records;
 public:
-    RawRequester(const std::string &endpoint) : BaseRequester(endpoint), cookies_() {}
-    cpr::Response Get(const std::string&, const cpr::Parameters&, const cpr::Header&) override;
-    cpr::Response Post(const std::string&, const cpr::Parameters&, const cpr::Header&, const cpr::Payload&) override;
-private:
-    cpr::Cookies cookies_;
+    explicit RawRequester(const std::string &endpoint) : BaseRequester(endpoint) {}
+
+    cpr::Response Get(const std::string&, const Records&, const Records&) override;
+    cpr::Response Post(const std::string&, const Records&, const Records&, const Records&) override;
 };
 
 } // namespace polygon_api

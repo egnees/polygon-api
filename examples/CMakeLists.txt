@@ -1,2 +1,3 @@
+add_subdirectory(GetProblemsList)
 add_subdirectory(CreateProblem)
 add_subdirectory(Auth)

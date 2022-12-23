@@ -74,11 +74,16 @@ set(sources
         include/polygon_api/Checker.h
         include/polygon_api/BaseRequester.h
         include/polygon_api/RawRequester.h
+        include/polygon_api/ApiRequester.h
         include/polygon_api/RequestBuilder.h
+        include/polygon_api/SHA512.h
         src/polygon_api.cpp
         src/PolygonSession.cpp
+        src/ApiRequester.cpp
         src/RawRequester.cpp
         src/RequestBuilder.cpp
+        src/SHA512.cpp
+        src/BaseRequester.cpp
         include/polygon_api/export.h
         include/polygon_api/polygon_api.h)
 source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" FILES ${sources})

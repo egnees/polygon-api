@@ -10,9 +10,10 @@
 
 namespace polygon_api {
 
-PolygonSession::PolygonSession(Account account)
+PolygonSession::PolygonSession(const Account &account)
                                : raw_requester_(std::make_shared<RawRequester>(kPolygonRawUrl)),
-                               account_(std::move(account)) {
+                               api_requester_(std::make_shared<ApiRequester>(kPolygonApiUrl, account.key_, account.secret_)),
+                               account_(account) {
     logged_raw = AuthRaw(account_.login_, account_.password_);
 }
 
@@ -28,6 +29,14 @@ std::shared_ptr<Problem> PolygonSession::CreateProblem(const std::string& name) 
         return nullptr;
     }
     return std::make_shared<Problem>(shared_from_this(), problem_id);
+}
+
+std::shared_ptr<RequestBuilder> PolygonSession::NewApiRequest() {
+    return std::make_shared<RequestBuilder>(api_requester_);
+}
+
+std::shared_ptr<RequestBuilder> PolygonSession::NewApiRequest(const std::string& method_name) {
+    return NewApiRequest()->SetMethodName(method_name);
 }
 
 std::shared_ptr<RequestBuilder> PolygonSession::NewRawRequest() {
@@ -72,6 +81,13 @@ bool PolygonSession::AuthRaw(const std::string &login, const std::string &passwo
     } catch (...) {};
 
     return true;
+}
+
+std::vector<std::shared_ptr<Problem>> PolygonSession::GetProblemsList(const std::string& id, const std::string& name,
+                                                                      const std::string& owner, bool show_deleted) {
+    cpr::Response response = NewApiRequest("problems.list")->Post();
+
+    return {};
 }
 
 bool PolygonSession::IsAuthRawSuccess() const {

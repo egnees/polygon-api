@@ -14,8 +14,9 @@
 namespace polygon_api {
 
 class RequestBuilder : public std::enable_shared_from_this<RequestBuilder> {
+    typedef std::vector<std::pair<std::string, std::string>> Records;
 public:
-    explicit RequestBuilder(std::shared_ptr<BaseRequester>);
+    RequestBuilder(std::shared_ptr<BaseRequester>);
     RequestBuilder(std::shared_ptr<BaseRequester>, const std::initializer_list<cpr::Pair>&);
 
     std::shared_ptr<RequestBuilder> GetSharedPtr();
@@ -32,9 +33,9 @@ public:
 private:
     std::string method_name_;
 
-    std::initializer_list<cpr::Parameter> params_;
-    cpr::Header header_;
-    std::initializer_list<cpr::Pair> payload_;
+    Records params_;
+    Records header_;
+    Records payload_;
 
     std::shared_ptr<BaseRequester> requester_;
 };

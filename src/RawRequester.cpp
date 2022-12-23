@@ -8,21 +8,22 @@
 
 namespace polygon_api {
 
-cpr::Response RawRequester::Get(const std::string &method_name, const cpr::Parameters &params_, const cpr::Header &header_) {
-    cpr::Response response = cpr::Get(cpr::Url{endpoint_ + method_name}, header_, params_, cookies_);
-    if (response.cookies.begin() != response.cookies.end()) {
-        cookies_ = response.cookies;
-    }
-    return response;
+typedef std::vector<std::pair<std::string, std::string>> Records;
+
+cpr::Response RawRequester::Get(const std::string &method_name, const Records &params, const Records &header) {
+    return BaseRequester::Get(method_name,
+                              BaseRequester::GetParamsFromRecords(params),
+                              BaseRequester::GetHeaderFromRecords(header));
 }
 
-cpr::Response RawRequester::Post(const std::string &method_name, const cpr::Parameters &params_,
-                                 const cpr::Header &header_, const cpr::Payload &payload_) {
-    cpr::Response response = cpr::Post(cpr::Url{endpoint_ + method_name}, header_, payload_, params_, cookies_);
-    if (response.cookies.begin() != response.cookies.end()) {
-        cookies_ = response.cookies;
-    }
-    return response;
+cpr::Response RawRequester::Post(const std::string &method_name,
+                                 const Records &params,
+                                 const Records &header,
+                                 const Records &payload) {
+    return BaseRequester::Post(method_name,
+                              BaseRequester::GetParamsFromRecords(params),
+                              BaseRequester::GetHeaderFromRecords(header),
+                              BaseRequester::GetPayloadFromRecords(payload));
 }
 
 } // namespace polygon_api

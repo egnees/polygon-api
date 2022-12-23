@@ -11,6 +11,7 @@
 #include "../utils/EnvReader.cpp"
 
 TEST(auth_test, full_auth_works) {
+    auto ac = EnvReader::Read("../../.env/env.txt");
     auto session = polygon_api::GetPolygonSession(EnvReader::Read("../../.env/env.txt"));
     ASSERT_TRUE(session != nullptr);
     ASSERT_TRUE(session->IsAuthRawSuccess());
