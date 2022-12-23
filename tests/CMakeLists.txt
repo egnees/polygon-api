@@ -56,26 +56,41 @@ find_package(cpr REQUIRED)
 add_executable(polygon_api_tests)
 target_sources(polygon_api_tests PRIVATE ${sources})
 
-add_executable(cpr_test)
-target_sources(cpr_test PRIVATE cpr_test.cpp)
-
-add_executable(auth_test)
-target_sources(auth_test PRIVATE auth_test.cpp)
-
 target_link_libraries(polygon_api_tests PRIVATE
         polygon_api::polygon_api
         gtest_main
         cpr::cpr)
+
+# cpr test
+add_executable(cpr_test)
+target_sources(cpr_test PRIVATE cpr_test.cpp)
 
 target_link_libraries(cpr_test PRIVATE
         polygon_api::polygon_api
         gtest_main
         cpr::cpr)
 
+#auth test
+add_executable(auth_test)
+target_sources(auth_test PRIVATE auth_test.cpp)
+
 target_link_libraries(auth_test PRIVATE
         polygon_api::polygon_api
         gtest_main
         cpr::cpr)
+
+#create problem test
+add_executable(create_problem_test)
+target_sources(create_problem_test PRIVATE create_problem_test.cpp)
+
+target_link_libraries(create_problem_test PRIVATE
+        polygon_api::polygon_api
+        gtest_main
+        cpr::cpr)
+
+#----------------------------------------------------------------------------------------------------------------------
+# includes
+#----------------------------------------------------------------------------------------------------------------------
 
 if(NOT is_top_level)
     win_copy_deps_to_target_dir(polygon_api_tests polygon_api::polygon_api)

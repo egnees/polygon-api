@@ -4,6 +4,7 @@
 //
 
 #include <polygon_api/polygon_api.h>
+#include <polygon_api/RawRequester.h>
 
 namespace polygon_api {
 

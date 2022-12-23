@@ -5,6 +5,8 @@
 
 #include <polygon_api/polygon_api.h>
 #include <polygon_api/PolygonSession.h>
+#include <polygon_api/RequestBuilder.h>
+#include <polygon_api/RawRequester.h>
 
 namespace polygon_api {
 
@@ -12,6 +14,20 @@ PolygonSession::PolygonSession(Account account)
                                : raw_requester_(std::make_shared<RawRequester>(kPolygonRawUrl)),
                                account_(std::move(account)) {
     logged_raw = AuthRaw(account_.login_, account_.password_);
+}
+
+std::shared_ptr<Problem> PolygonSession::CreateProblem(const std::string& name) {
+    cpr::Response r = NewRawRequest("cp")->SetPayload({{"name", name},
+                                                      {"submit", "Create"},
+                                                      {"submitted", "true"},
+                                                      {"ccid", GetCcid()}})->Post();
+    std::string problem_id;
+    try {
+        problem_id = ExtractProblemIdFromHTML(r.text, name);
+    } catch (...) {
+        return nullptr;
+    }
+    return std::make_shared<Problem>(shared_from_this(), problem_id);
 }
 
 std::shared_ptr<RequestBuilder> PolygonSession::NewRawRequest() {
@@ -113,6 +129,34 @@ std::string PolygonSession::ExtractCcidFromURL(const std::string &text) {
         throw;
     }
     return ccid;
+}
+
+std::string PolygonSession::ExtractProblemIdFromHTML(const std::string& html, const std::string& problem_name) {
+    auto pos = html.find(problem_name);
+    if (pos == std::string::npos) {
+        throw std::runtime_error("there is no such problem in html");
+    }
+    const std::string pat = "problemId=\"";
+    while (pos > 0) {
+        --pos;
+        if (html.substr(pos, pat.size()) == pat) {
+            break;
+        }
+    }
+    if (html.substr(pos, pat.size()) != pat) {
+        throw std::runtime_error("there is no such pattern in html");
+    }
+    pos += pat.size();
+    std::string id;
+    while ('0' <= html[pos] && html[pos] <= '9') {
+        id.push_back(html[pos]);
+        ++pos;
+    }
+    if (pos < html.size() && html[pos] == '\"') {
+        return id;
+    } else {
+        throw std::runtime_error("there is no such pattern in html");
+    }
 }
 
 } // namespace polygon_api

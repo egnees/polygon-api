@@ -5,6 +5,8 @@
 
 #pragma once
 
+#include <polygon_api/Problem.h>
+#include <polygon_api/Account.h>
 #include <polygon_api/polygon_api.h>
 
 namespace polygon_api {
@@ -13,14 +15,17 @@ const std::string kPolygonRawUrl = "https://polygon.codeforces.com/";
 const std::string kPolygonOrigin = "https://polygon.codeforces.com";
 const std::string kPolygonFp = "a92fdda7ac4f88ec7f7a8b28231cdd04";
 
-class PolygonSession {
+class PolygonSession : public std::enable_shared_from_this<PolygonSession> {
 public:
-    PolygonSession(Account account);
+    explicit PolygonSession(Account account);
 
     static std::string ExtractCcidFromHTML(const std::string&, const std::string&);
     static std::string ExtractCcidFromURL(const std::string&);
+    static std::string ExtractProblemIdFromHTML(const std::string&, const std::string&);
 
     [[nodiscard]] bool IsAuthRawSuccess() const;
+
+    std::shared_ptr<Problem> CreateProblem(const std::string&);
 private:
     bool AuthRaw(const std::string&, const std::string&);
 

@@ -4,6 +4,7 @@
 //
 
 #include <polygon_api/polygon_api.h>
+#include <polygon_api/PolygonSession.h>
 
 #include <gtest/gtest.h>
 

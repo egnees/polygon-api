@@ -8,6 +8,7 @@
 #ifndef POLYGON_API_REQUESTBUILD_H
 #define POLYGON_API_REQUESTBUILD_H
 
+#include <polygon_api/BaseRequester.h>
 #include <polygon_api/polygon_api.h>
 
 namespace polygon_api {
