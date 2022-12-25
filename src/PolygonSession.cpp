@@ -90,6 +90,10 @@ std::vector<std::shared_ptr<Problem>> PolygonSession::GetProblemsList(const std:
     return {};
 }
 
+std::vector<std::shared_ptr<Problem>> PolygonSession::GetProblemsList() {
+    return GetProblemsList("", "", "", "");
+}
+
 bool PolygonSession::IsAuthRawSuccess() const {
     return logged_raw;
 }

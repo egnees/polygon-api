@@ -88,6 +88,15 @@ target_link_libraries(create_problem_test PRIVATE
         gtest_main
         cpr::cpr)
 
+#json_parser_test
+add_executable(json_parser_test)
+target_sources(json_parser_test PRIVATE json_parser_test.cpp)
+
+target_link_libraries(json_parser_test PRIVATE
+        polygon_api::polygon_api
+        gtest_main
+        cpr::cpr)
+
 #----------------------------------------------------------------------------------------------------------------------
 # includes
 #----------------------------------------------------------------------------------------------------------------------

@@ -77,6 +77,16 @@ set(sources
         include/polygon_api/ApiRequester.h
         include/polygon_api/RequestBuilder.h
         include/polygon_api/SHA512.h
+        include/json/JsonParser.h
+        include/json/JsonList.h
+        include/json/JsonNumber.h
+        include/json/JsonTemplate.h
+        include/json/JsonBoolean.h
+        include/json/JsonString.h
+        include/json/JsonObject.h
+        include/json/src/JsonObject.cpp
+        include/json/src/JsonList.cpp
+        include/json/src/JsonParser.cpp
         src/polygon_api.cpp
         src/PolygonSession.cpp
         src/ApiRequester.cpp
