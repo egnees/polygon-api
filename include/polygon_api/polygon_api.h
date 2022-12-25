@@ -13,6 +13,13 @@
 #include <algorithm>
 #include <utility>
 
+POLYGON_API_EXPORT class JsonParser;
+POLYGON_API_EXPORT class JsonTemplate;
+POLYGON_API_EXPORT class JsonObject;
+POLYGON_API_EXPORT class JsonList;
+POLYGON_API_EXPORT class JsonNumber;
+POLYGON_API_EXPORT class JsonString;
+
 namespace polygon_api {
 
 POLYGON_API_EXPORT struct Account;

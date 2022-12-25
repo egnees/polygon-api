@@ -33,8 +33,13 @@ std::string ApiRequester::MakeApiSig(
 
     std::string api_sig = random_6_chars + "/" + method_name + "?";
     std::sort(params.begin(), params.end());
+    bool first = true;
     for (const auto &[name, value] : params) {
-        api_sig += "&";
+        if (!first) {
+            api_sig += "&";
+        } else {
+            first = false;
+        }
         api_sig += name;
         api_sig += "=";
         api_sig += value;
