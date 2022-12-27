@@ -30,9 +30,10 @@ public:
     [[nodiscard]] bool IsAuthRawSuccess() const;
 
     std::shared_ptr<Problem> CreateProblem(const std::string&);
-    std::vector<std::shared_ptr<Problem>> GetProblemsList(const std::string&, const std::string&,
+    std::vector<std::shared_ptr<Problem>> GetProblemsList(int, const std::string&,
                                                           const std::string&, bool show_deleted = false);
     std::vector<std::shared_ptr<Problem>> GetProblemsList();
+    std::shared_ptr<Problem> GetProblem(int);
 private:
     bool AuthRaw(const std::string&, const std::string&);
 

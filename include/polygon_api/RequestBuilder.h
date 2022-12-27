@@ -27,6 +27,7 @@ public:
     std::shared_ptr<RequestBuilder> AddToHeader(const std::initializer_list<cpr::Pair>&);
     std::shared_ptr<RequestBuilder> AddToHeader(const std::string&, const std::string&);
     std::shared_ptr<RequestBuilder> SetPayload(const std::initializer_list<cpr::Pair>&);
+    std::shared_ptr<RequestBuilder> AddToPayload(const std::string&, const std::string&);
 
     [[nodiscard]] cpr::Response Post() const;
     [[nodiscard]] cpr::Response Get() const;

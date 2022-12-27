@@ -94,6 +94,7 @@ set(sources
         src/RequestBuilder.cpp
         src/SHA512.cpp
         src/BaseRequester.cpp
+        src/Problem.cpp
         include/polygon_api/export.h
         include/polygon_api/polygon_api.h)
 source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" FILES ${sources})

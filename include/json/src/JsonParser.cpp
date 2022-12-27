@@ -56,20 +56,21 @@ std::shared_ptr<JsonList> JsonParser::ParseList() {
 std::shared_ptr<JsonObject> JsonParser::ParseObject() {
     std::vector<std::pair<std::string, std::shared_ptr<JsonTemplate>>> list;
     ++ptr_;
-    Skip();
     try {
         while (true) {
+            Skip();
             if (s_[ptr_] == '}') {
                 break;
             }
+            Skip();
             std::string name = ParseString()->Get();
             Skip();
             if (s_[ptr_] != ':') {
                 throw std::runtime_error("json format error");
             }
             ++ptr_;
-            Skip();
             list.emplace_back(name, Parse());
+            Skip();
             if (s_[ptr_] == '}') {
                 break;
             }
@@ -110,8 +111,8 @@ std::shared_ptr<JsonString> JsonParser::ParseString() {
 }
 
 std::shared_ptr<JsonBoolean> JsonParser::ParseBoolean() {
-    if (s_.substr(ptr_, 6) == "false") {
-        ptr_ += 6;
+    if (s_.substr(ptr_, 5) == "false") {
+        ptr_ += 5;
         return std::make_shared<JsonBoolean>(false);
     } else if (s_.substr(ptr_, 4) == "true") {
         ptr_ += 4;
