@@ -72,5 +72,10 @@ cpr::Response RequestBuilder::Get() const {
     return requester_->Get(method_name_, params_, header_);
 }
 
+std::shared_ptr<RequestBuilder> RequestBuilder::AddToPayload(const std::string &key, const std::string &value) {
+    payload_.emplace_back(key, value);
+    return shared_from_this();
+}
+
 }
 

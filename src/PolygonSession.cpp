@@ -8,6 +8,8 @@
 #include <polygon_api/RequestBuilder.h>
 #include <polygon_api/RawRequester.h>
 
+#include <json/JsonParser.h>
+
 namespace polygon_api {
 
 PolygonSession::PolygonSession(const Account &account)
@@ -28,7 +30,7 @@ std::shared_ptr<Problem> PolygonSession::CreateProblem(const std::string& name) 
     } catch (...) {
         return nullptr;
     }
-    return std::make_shared<Problem>(shared_from_this(), problem_id);
+    return GetProblem(std::stoi(problem_id));
 }
 
 std::shared_ptr<RequestBuilder> PolygonSession::NewApiRequest() {
@@ -83,15 +85,52 @@ bool PolygonSession::AuthRaw(const std::string &login, const std::string &passwo
     return true;
 }
 
-std::vector<std::shared_ptr<Problem>> PolygonSession::GetProblemsList(const std::string& id, const std::string& name,
+std::vector<std::shared_ptr<Problem>> PolygonSession::GetProblemsList(int id, const std::string& name,
                                                                       const std::string& owner, bool show_deleted) {
-    cpr::Response response = NewApiRequest("problems.list")->Post();
-
-    return {};
+    auto request_builder = NewApiRequest("problems.list");
+    if (id != 0) {
+        request_builder = request_builder->AddToPayload("id", std::to_string(id));
+    }
+    if (!name.empty()) {
+        request_builder = request_builder->AddToPayload("name", name);
+    }
+    if (!owner.empty()) {
+        request_builder = request_builder->AddToPayload("owner", owner);
+    }
+    if (show_deleted) {
+        request_builder = request_builder->AddToPayload("showDeleted", "true");
+    }
+    cpr::Response response = request_builder->Post();
+    if (response.status_code != 200) {
+        throw std::runtime_error("cant get problems list: request code is " +
+            std::to_string(response.status_code) + " cuz " + response.text);
+    }
+    std::vector<std::shared_ptr<Problem>> problems;
+    JsonParser parser(response.text);
+    std::shared_ptr<JsonList> problemsJsonList;
+    std::vector<std::shared_ptr<Problem>> problemsList;
+    try {
+        problemsJsonList = As<JsonList>(As<JsonObject>(parser.Parse())->Get("result"));
+    } catch (...) {
+        throw std::runtime_error("cant parse response as json list");
+    }
+    problemsList.reserve(problemsJsonList->Size());
+    for (size_t i = 0; i < problemsJsonList->Size(); ++i) {
+        try {
+            problemsList.push_back(std::make_shared<Problem>(shared_from_this(), As<JsonObject>(problemsJsonList->Get(i))));
+        } catch (...) {
+            throw std::runtime_error("cant get problems list: bad request");
+        }
+    }
+    return problemsList;
 }
 
 std::vector<std::shared_ptr<Problem>> PolygonSession::GetProblemsList() {
-    return GetProblemsList("", "", "", "");
+    return GetProblemsList(0, "", "", false);
+}
+
+std::shared_ptr<Problem> PolygonSession::GetProblem(int id) {
+    return GetProblemsList(id, "", "", false)[0];
 }
 
 bool PolygonSession::IsAuthRawSuccess() const {

@@ -8,8 +8,14 @@
 
 #include "../utils/EnvReader.cpp"
 
+#include <iostream>
+
 int main() {
     auto session = polygon_api::GetPolygonSession(EnvReader::Read());
-    session->GetProblemsList("", "", "");
+    auto problemsList = session->GetProblemsList(0, "", "");
+    std::cout << "You have " << problemsList.size() << " problems which names are:\n";
+    for (const auto &problem : problemsList) {
+        std::cout << problem->GetName() << '\n';
+    }
     return 0;
 }
